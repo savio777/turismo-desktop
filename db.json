@@ -1,0 +1,30 @@
+{
+  "users": [
+    {
+      "id": "1",
+      "name": "Ranielly",
+      "email": "guilhonturismo@gmail.com",
+      "senha": "1234"
+    }
+  ],
+  "customers": [
+    {
+      "id": "1",
+      "name": "Leonardo Marcos Breno Teixeira",
+      "phone": "(85) 98852-6265",
+      "rg": "23.749.322-6",
+      "cpf": "444.067.721-54",
+      "address": "Rua Manoelito Costa",
+      "name_mother": "Vera Mariah Raquel"
+    },
+    {
+      "name": "Jaqueline Gabrielly Sônia Moreira",
+      "phone": "(82) 98387-2779",
+      "rg": "34.135.716-9",
+      "cpf": "351.418.741-09",
+      "address": "Rua José Rufino de Paula",
+      "name_mother": "Stella Maya Luiza",
+      "id": "hRDQn2O"
+    }
+  ]
+}
