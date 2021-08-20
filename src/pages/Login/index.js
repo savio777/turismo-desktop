@@ -1,11 +1,18 @@
 import React from 'react'
 
-import { Container } from './styles'
+import { Container, FormBox, Divider } from './styles'
+import { Input, ButtonPrincipal } from '../../styles'
 
 export default function Login() {
   return (
     <Container>
-      <p>login</p>
+      <FormBox>
+        <h1>Guilhon Turismo</h1>
+        <Divider />
+        <Input placeholder="email" type="email" />
+        <Input placeholder="senha" type="password" />
+        <ButtonPrincipal>logar</ButtonPrincipal>
+      </FormBox>
     </Container>
   )
 }
