@@ -1,5 +1,6 @@
 import { createGlobalStyle } from 'styled-components'
 import styled from 'styled-components'
+
 import { colors } from './core/helper'
 
 const GlobalStyle = createGlobalStyle`
@@ -29,7 +30,6 @@ const GlobalStyle = createGlobalStyle`
 
 export const Input = styled.input`
   width: 100%;
-  margin-top: 20px;
   border: 0;
   border-bottom-style: solid;
   border-bottom-width: 1px;
