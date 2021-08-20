@@ -8,14 +8,17 @@ require('@electron/remote/main').initialize()
 function createWindow() {
   // Create the browser window.
   const win = new BrowserWindow({
+    autHideMenuBar: true,
     width: 800,
     height: 600,
-    backgroundColor: '#d9d9d9',
+    backgroundColor: '#ffff',
     webPreferences: {
       nodeIntegration: true,
       enableRemoteModule: true
     }
   })
+
+  win.setMenu(null)
 
   win.loadURL(
     isDev
