@@ -28,6 +28,9 @@ export const DropdownItem = styled.button`
 `
 
 export const ButtonDropdown = styled.button`
+  display: flex;
+  align-items: center;
+  justify-content: center;
   background-color: ${colors.primary};
   color: white;
   padding: 5px;

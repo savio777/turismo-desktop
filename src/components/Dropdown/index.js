@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import { FaChevronDown } from 'react-icons/fa'
 
 import {
   Container,
@@ -19,7 +20,9 @@ const Dropdown = ({ optionsItems = [] }) => {
 
   return (
     <Container onClick={() => setActive(!active)}>
-      <ButtonDropdown>opções</ButtonDropdown>
+      <ButtonDropdown>
+        <FaChevronDown />
+      </ButtonDropdown>
       <DropdownContent active={active}>
         {optionsItems.map(o => (
           <DropdownItem onClick={o.action}>{o.title}</DropdownItem>
