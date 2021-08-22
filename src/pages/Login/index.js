@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
+import sha256 from 'sha256'
 
+import api from '../../core/api'
 import { Container, FormBox, Divider } from './styles'
 import { Input, ButtonPrincipal } from '../../styles'
 
@@ -10,10 +12,15 @@ export default function Login() {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
 
-  const signIn = () => {
-    console.log(email, password)
+  const signIn = async () => {
+    try {
+      /*const response = await api.post('users', { usuario: email, senha: sha256(password) })
+      if(response.status === 200)*/
 
-    history.push('/dashboard')
+      history.push('/dashboard')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   return (
