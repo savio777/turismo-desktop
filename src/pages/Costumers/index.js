@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { FaEye, FaEdit, FaTrash } from 'react-icons/fa'
+import { FaEye, FaEdit, FaTrash, FaPlus } from 'react-icons/fa'
 
 import Dropdown from '../../components/Dropdown'
 import api from '../../core/api'
 import { Container, Title } from './styles'
+import { ButtonPrincipal } from '../../styles'
 
 export default function Dashboard() {
   const [costumers, setCostumers] = useState([])
@@ -29,6 +30,11 @@ export default function Dashboard() {
   return (
     <Container>
       <Title>Clientes</Title>
+      <ButtonPrincipal onClick={() => alert('modal cadastrar cliente')}>
+        <FaPlus style={{ marginRight: 5 }} />
+        Cadastrar Cliente
+      </ButtonPrincipal>
+
       <table>
         <tr>
           <th></th>

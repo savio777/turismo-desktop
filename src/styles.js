@@ -41,7 +41,7 @@ export const ButtonPrincipal = styled.button`
   align-items: center;
   justify-content: center;
   min-height: 20px;
-  width: 80%;
+  width: ${props => (props.full ? '80%' : '30%')};
   padding: 10px 5px 10px 5px;
 
   border-radius: 10px;

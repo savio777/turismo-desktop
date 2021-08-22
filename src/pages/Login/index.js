@@ -40,7 +40,9 @@ export default function Login() {
           value={password}
           onChange={event => setPassword(event.target.value)}
         />
-        <ButtonPrincipal onClick={signIn}>logar</ButtonPrincipal>
+        <ButtonPrincipal full onClick={signIn}>
+          logar
+        </ButtonPrincipal>
       </FormBox>
     </Container>
   )

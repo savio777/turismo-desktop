@@ -15,6 +15,7 @@ export const Container = styled.div`
     font-family: arial, sans-serif;
     border-collapse: collapse;
     width: 100%;
+    margin-top: 10px;
   }
 
   td,
@@ -34,5 +35,5 @@ export const Title = styled.h2`
   font-style: italic;
   text-align: center;
   font-weight: bold;
-  margin-bottom: 40px;
+  margin-bottom: 20px;
 `
