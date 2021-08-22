@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import Dropdown from '../../components/Dropdown'
+import { FaEye, FaEdit, FaTrash } from 'react-icons/fa'
 
+import Dropdown from '../../components/Dropdown'
 import api from '../../core/api'
-import { Container } from './styles'
+import { Container, Title } from './styles'
 
 export default function Dashboard() {
   const [costumers, setCostumers] = useState([])
 
   const [optionDropDown] = useState([
-    { title: 'detalhes', action: () => alert('detalhes') },
-    { title: 'editar', action: () => alert('editar') },
-    { title: 'excluir', action: () => alert('excluir') }
+    { title: <FaEye />, action: () => alert('detalhes') },
+    { title: <FaEdit />, action: () => alert('editar') },
+    { title: <FaTrash color={'red'} />, action: () => alert('excluir') }
   ])
 
   const getData = async () => {
@@ -27,6 +28,7 @@ export default function Dashboard() {
 
   return (
     <Container>
+      <Title>Clientes</Title>
       <table>
         <tr>
           <th></th>

@@ -17,7 +17,7 @@ export default function Login() {
       /*const response = await api.post('users', { usuario: email, senha: sha256(password) })
       if(response.status === 200)*/
 
-      history.push('/dashboard')
+      history.push('/costumers')
     } catch (error) {
       console.log(error)
     }

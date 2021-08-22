@@ -28,3 +28,11 @@ export const Container = styled.div`
     background-color: #dddddd;
   }
 `
+
+export const Title = styled.h2`
+  color: ${colors.primary};
+  font-style: italic;
+  text-align: center;
+  font-weight: bold;
+  margin-bottom: 40px;
+`
