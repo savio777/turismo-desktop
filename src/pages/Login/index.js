@@ -29,12 +29,14 @@ export default function Login() {
         <h1>Guilhon Turismo</h1>
         <Divider />
         <Input
+          full
           placeholder="email"
           type="email"
           value={email}
           onChange={event => setEmail(event.target.value)}
         />
         <Input
+          full
           placeholder="senha"
           type="password"
           value={password}

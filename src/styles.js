@@ -28,12 +28,19 @@ const GlobalStyle = createGlobalStyle`
     }
 `
 
+export const Label = styled.p`
+  margin-top: 15px;
+  font-size: 14px;
+  font-weight: bold;
+`
+
 export const Input = styled.input`
-  width: 100%;
+  width: ${props => (props.full ? '100%' : '60%')};
   border: 0;
   border-bottom-style: solid;
   border-bottom-width: 1px;
   border-bottom-color: #ccc;
+  font-size: 12px;
 `
 
 export const ButtonPrincipal = styled.button`
