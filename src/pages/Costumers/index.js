@@ -12,6 +12,8 @@ export default function Dashboard() {
   const [costumers, setCostumers] = useState([])
   const [openModalDeleteCostumer, setOpenModalDeleteCostumer] = useState(false)
   const [openModalCreateCostumer, setOpenModalCreateCostumer] = useState(false)
+  const [openModalDetailsCostumer, setOpenModalDetailsCostumer] =
+    useState(false)
   // create | edit
   const [selectedModalCreateEditCostumer, setSelectedModalCreateEditCostumer] =
     useState('create')
@@ -57,6 +59,17 @@ export default function Dashboard() {
     setAddress('')
     setNameMother('')
     setCostumerEdit({})
+  }
+
+  const openModalDetails = async idCostumer => {
+    try {
+      const response = await api.get(`customers/${idCostumer}`)
+
+      setCostumerEdit(response.data)
+      setOpenModalDetailsCostumer(true)
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const openModalEdit = async idCostumer => {
@@ -196,7 +209,7 @@ export default function Dashboard() {
       title="Deseja realmente excluir o cliente?"
     >
       <p style={{ marginTop: 10, marginBottom: 10 }}>
-        Deseja deletar o cliente {costumerEdit.name}?
+        Deseja deletar o cliente {costumerEdit?.name}?
       </p>
       <ContainerRow>
         <ButtonPrincipal onClick={deleteCostumer} typeButton="danger">
@@ -214,10 +227,35 @@ export default function Dashboard() {
     </Modal>
   )
 
+  const modalDetailsCostumer = () => (
+    <Modal
+      open={openModalDetailsCostumer}
+      close={() => {
+        setOpenModalDetailsCostumer(false)
+        setCostumerEdit({})
+      }}
+      title="Detalhes do cliente"
+    >
+      <Label>Nome</Label>
+      <p>{costumerEdit?.name}</p>
+      <Label>Telefone</Label>
+      <p>{costumerEdit?.phone}</p>
+      <Label>RG</Label>
+      <p>{costumerEdit?.rg}</p>
+      <Label>CPF</Label>
+      <p>{costumerEdit?.cpf}</p>
+      <Label>Endereço</Label>
+      <p>{costumerEdit?.address}</p>
+      <Label>Nome da mãe</Label>
+      <p>{costumerEdit?.name_mother}</p>
+    </Modal>
+  )
+
   return (
     <>
       {modalCreateEditCostumer()}
       {modalDeleteCostumer()}
+      {modalDetailsCostumer()}
       <Container>
         <Title>Clientes</Title>
         <ButtonPrincipal
@@ -240,7 +278,7 @@ export default function Dashboard() {
             </tr>
             {costumers.map(c => {
               const optionDropDown = [
-                { title: <FaEye />, action: () => alert('detalhes') },
+                { title: <FaEye />, action: () => openModalDetails(c.id) },
                 { title: <FaEdit />, action: () => openModalEdit(c.id) },
                 {
                   title: <FaTrash color={'red'} />,
