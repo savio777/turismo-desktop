@@ -34,12 +34,6 @@ export default function Dashboard() {
   */
   const [costumerEdit, setCostumerEdit] = useState({})
 
-  const [optionDropDown] = useState([
-    { title: <FaEye />, action: () => alert('detalhes') },
-    { title: <FaEdit />, action: () => alert('editar') },
-    { title: <FaTrash color={'red'} />, action: () => alert('excluir') }
-  ])
-
   const getData = async () => {
     try {
       const response = await api.get('customers')
@@ -62,6 +56,24 @@ export default function Dashboard() {
     setAddress('')
     setNameMother('')
     setCostumerEdit({})
+  }
+
+  const openModalEdit = async idCostumer => {
+    try {
+      const response = await api.get(`customers/${idCostumer}`)
+
+      setCostumerEdit(response.data)
+      setName(response.data.name)
+      setPhone(response.data.phone)
+      setCPF(response.data.cpf)
+      setRG(response.data.rg)
+      setAddress(response.data.address)
+      setNameMother(response.data.name_mother)
+      setOpenModalCreateCostumer(true)
+      setSelectedModalCreateEditCostumer('edit')
+    } catch (error) {
+      console.log(error)
+    }
   }
 
   const createCostumer = async () => {
@@ -178,16 +190,27 @@ export default function Dashboard() {
               <th>Telefone</th>
               <th>CPF</th>
             </tr>
-            {costumers.map(c => (
-              <tr key={c.id}>
-                <td>
-                  <Dropdown optionsItems={optionDropDown} />
-                </td>
-                <td>{c.name}</td>
-                <td>{c.phone}</td>
-                <td>{c.cpf}</td>
-              </tr>
-            ))}
+            {costumers.map(c => {
+              const optionDropDown = [
+                { title: <FaEye />, action: () => alert('detalhes') },
+                { title: <FaEdit />, action: () => openModalEdit(c.id) },
+                {
+                  title: <FaTrash color={'red'} />,
+                  action: () => alert('excluir')
+                }
+              ]
+
+              return (
+                <tr key={c.id}>
+                  <td>
+                    <Dropdown optionsItems={optionDropDown} />
+                  </td>
+                  <td>{c.name}</td>
+                  <td>{c.phone}</td>
+                  <td>{c.cpf}</td>
+                </tr>
+              )
+            })}
           </tbody>
         </table>
       </Container>
