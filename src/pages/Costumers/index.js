@@ -75,6 +75,8 @@ export default function Dashboard() {
         name_mother: nameMother
       })
 
+      console.log(response.data)
+
       // quando a api tiver pronta vai mostrar a mensagem
       // de resposta e a verificação se algum campo
       // ficou vazia será feita pela api e codigo de erro
@@ -120,38 +122,36 @@ export default function Dashboard() {
           : 'Cadastro de clientes'
       }
     >
-      <form>
-        <Label>Nome</Label>
-        <Input value={name} onChange={event => setName(event.target.value)} />
-        <Label>Telefone</Label>
-        <Input value={phone} onChange={event => setPhone(event.target.value)} />
-        <Label>CPF</Label>
-        <Input value={CPF} onChange={event => setCPF(event.target.value)} />
-        <Label>RG</Label>
-        <Input value={RG} onChange={event => setRG(event.target.value)} />
-        <Label>Endereço</Label>
-        <Input
-          value={address}
-          onChange={event => setAddress(event.target.value)}
-        />
-        <Label>Nome da mãe</Label>
-        <Input
-          value={nameMother}
-          onChange={event => setNameMother(event.target.value)}
-        />
-        <ButtonPrincipal
-          style={{ marginTop: 10 }}
-          onSubmit={() =>
-            selectedModalCreateEditCostumer === 'edit'
-              ? editCostumer()
-              : createCostumer()
-          }
-        >
-          {selectedModalCreateEditCostumer === 'edit'
-            ? 'Salvar edição'
-            : 'Salvar cadastro'}
-        </ButtonPrincipal>
-      </form>
+      <Label>Nome</Label>
+      <Input value={name} onChange={event => setName(event.target.value)} />
+      <Label>Telefone</Label>
+      <Input value={phone} onChange={event => setPhone(event.target.value)} />
+      <Label>CPF</Label>
+      <Input value={CPF} onChange={event => setCPF(event.target.value)} />
+      <Label>RG</Label>
+      <Input value={RG} onChange={event => setRG(event.target.value)} />
+      <Label>Endereço</Label>
+      <Input
+        value={address}
+        onChange={event => setAddress(event.target.value)}
+      />
+      <Label>Nome da mãe</Label>
+      <Input
+        value={nameMother}
+        onChange={event => setNameMother(event.target.value)}
+      />
+      <ButtonPrincipal
+        style={{ marginTop: 10 }}
+        onClick={() =>
+          selectedModalCreateEditCostumer === 'edit'
+            ? editCostumer()
+            : createCostumer()
+        }
+      >
+        {selectedModalCreateEditCostumer === 'edit'
+          ? 'Salvar edição'
+          : 'Salvar cadastro'}
+      </ButtonPrincipal>
     </Modal>
   )
 
