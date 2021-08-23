@@ -21,6 +21,11 @@ export const ModalContainer = styled.div`
   padding: 20px;
   border: 1px solid #888;
   width: 80%;
+
+  h3 {
+    text-align: center;
+    font-weight: bold;
+  }
 `
 
 export const ButtonClose = styled.button`

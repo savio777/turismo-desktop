@@ -1,17 +1,17 @@
 import React, { useEffect, useState } from 'react'
-import { FaEye, FaEdit, FaTrash, FaPlus } from 'react-icons/fa'
+import { FaEye, FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 
 import Modal from '../../components/Modal'
 import Dropdown from '../../components/Dropdown'
 import api from '../../core/api'
-import { Container, Title } from './styles'
+import { Container, Title, ContainerRow } from './styles'
 import { ButtonPrincipal, Input, Label } from '../../styles'
 
 export default function Dashboard() {
-  const [openModalCreateCostumer, setOpenModalCreateCostumer] = useState(false)
   const [costumers, setCostumers] = useState([])
-
+  const [openModalDeleteCostumer, setOpenModalDeleteCostumer] = useState(false)
+  const [openModalCreateCostumer, setOpenModalCreateCostumer] = useState(false)
   // create | edit
   const [selectedModalCreateEditCostumer, setSelectedModalCreateEditCostumer] =
     useState('create')
@@ -48,6 +48,7 @@ export default function Dashboard() {
 
   const closeModalModalCreateEditCostumer = () => {
     setOpenModalCreateCostumer(false)
+    setOpenModalDeleteCostumer(false)
 
     setName('')
     setPhone('')
@@ -76,6 +77,16 @@ export default function Dashboard() {
     }
   }
 
+  const openModalExclude = async idCostumer => {
+    try {
+      const response = await api.get(`customers/${idCostumer}`)
+      setCostumerEdit(response.data)
+      setOpenModalDeleteCostumer(true)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const createCostumer = async () => {
     try {
       const response = await api.post('customers', {
@@ -86,8 +97,6 @@ export default function Dashboard() {
         address,
         name_mother: nameMother
       })
-
-      console.log(response.data)
 
       // quando a api tiver pronta vai mostrar a mensagem
       // de resposta e a verificação se algum campo
@@ -116,6 +125,19 @@ export default function Dashboard() {
       // de resposta e a verificação se algum campo
       // ficou vazia será feita pela api e codigo de erro
       toast.success('Cliente salvo com sucesso!')
+
+      closeModalModalCreateEditCostumer()
+      getData()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const deleteCostumer = async () => {
+    try {
+      const response = await api.delete(`customers/${costumerEdit?.id}`)
+
+      toast.warn('Cliente deletado com sucesso!')
 
       closeModalModalCreateEditCostumer()
       getData()
@@ -167,9 +189,35 @@ export default function Dashboard() {
     </Modal>
   )
 
+  const modalDeleteCostumer = () => (
+    <Modal
+      open={openModalDeleteCostumer}
+      close={closeModalModalCreateEditCostumer}
+      title="Deseja realmente excluir o cliente?"
+    >
+      <p style={{ marginTop: 10, marginBottom: 10 }}>
+        Deseja deletar o cliente {costumerEdit.name}?
+      </p>
+      <ContainerRow>
+        <ButtonPrincipal onClick={deleteCostumer} typeButton="danger">
+          <FaTrash style={{ marginRight: 5 }} />
+          Deletar
+        </ButtonPrincipal>
+        <ButtonPrincipal
+          typeButton="neutral"
+          onClick={closeModalModalCreateEditCostumer}
+        >
+          <FaTimes style={{ marginRight: 5 }} />
+          Cancelar
+        </ButtonPrincipal>
+      </ContainerRow>
+    </Modal>
+  )
+
   return (
     <>
       {modalCreateEditCostumer()}
+      {modalDeleteCostumer()}
       <Container>
         <Title>Clientes</Title>
         <ButtonPrincipal
@@ -196,7 +244,7 @@ export default function Dashboard() {
                 { title: <FaEdit />, action: () => openModalEdit(c.id) },
                 {
                   title: <FaTrash color={'red'} />,
-                  action: () => alert('excluir')
+                  action: () => openModalExclude(c.id)
                 }
               ]
 

@@ -1,5 +1,5 @@
 import { createGlobalStyle } from 'styled-components'
-import styled from 'styled-components'
+import styled, { css } from 'styled-components'
 
 import { colors } from './core/helper'
 
@@ -43,7 +43,25 @@ export const Input = styled.input`
   font-size: 12px;
 `
 
+const typesButton = (type = '') => {
+  switch (type) {
+    case 'danger':
+      return css`
+        background-color: red;
+      `
+    case 'neutral':
+      return css`
+        background-color: gray;
+      `
+    default:
+      return css`
+        background-color: ${colors.primary};
+      `
+  }
+}
+
 export const ButtonPrincipal = styled.button`
+  ${props => typesButton(props.typeButton)}
   display: flex;
   align-items: center;
   justify-content: center;
@@ -52,7 +70,6 @@ export const ButtonPrincipal = styled.button`
   padding: 10px 5px 10px 5px;
 
   border-radius: 10px;
-  background-color: ${colors.primary};
   color: #fff;
 `
 

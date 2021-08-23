@@ -32,8 +32,14 @@ export const Container = styled.div`
 
 export const Title = styled.h2`
   color: ${colors.primary};
-  font-style: italic;
   text-align: center;
   font-weight: bold;
   margin-bottom: 20px;
+`
+
+export const ContainerRow = styled.div`
+  display: flex;
+  flex: 1;
+  flex-direction: row;
+  justify-content: space-between;
 `
