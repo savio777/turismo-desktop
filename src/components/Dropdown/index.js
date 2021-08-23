@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import { FaChevronDown } from 'react-icons/fa'
+import { generateRandomNumberString } from '../../core/helper'
 
 import {
   Container,
@@ -24,9 +25,14 @@ const Dropdown = ({ optionsItems = [] }) => {
         <FaChevronDown />
       </ButtonDropdown>
       <DropdownContent active={active}>
-        {optionsItems.map(o => (
-          <DropdownItem onClick={o.action}>{o.title}</DropdownItem>
-        ))}
+        {optionsItems.map(o => {
+          let randomNumberString = generateRandomNumberString()
+          return (
+            <DropdownItem key={randomNumberString} onClick={o.action}>
+              {o.title}
+            </DropdownItem>
+          )
+        })}
       </DropdownContent>
     </Container>
   )

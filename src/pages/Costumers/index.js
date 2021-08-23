@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { FaEye, FaEdit, FaTrash, FaPlus } from 'react-icons/fa'
+import { toast } from 'react-toastify'
 
 import Modal from '../../components/Modal'
 import Dropdown from '../../components/Dropdown'
@@ -63,6 +64,52 @@ export default function Dashboard() {
     setCostumerEdit({})
   }
 
+  const createCostumer = async () => {
+    try {
+      const response = await api.post('customers', {
+        name,
+        phone,
+        rg: RG,
+        cpf: CPF,
+        address,
+        name_mother: nameMother
+      })
+
+      // quando a api tiver pronta vai mostrar a mensagem
+      // de resposta e a verificação se algum campo
+      // ficou vazia será feita pela api e codigo de erro
+      toast.success('Cadastrado com sucesso!')
+
+      closeModalModalCreateEditCostumer()
+      getData()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  const editCostumer = async () => {
+    try {
+      const response = await api.put(`customers/${costumerEdit?.id}`, {
+        name,
+        phone,
+        rg: RG,
+        cpf: CPF,
+        address,
+        name_mother: nameMother
+      })
+
+      // quando a api tiver pronta vai mostrar a mensagem
+      // de resposta e a verificação se algum campo
+      // ficou vazia será feita pela api e codigo de erro
+      toast.success('Cliente salvo com sucesso!')
+
+      closeModalModalCreateEditCostumer()
+      getData()
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const modalCreateEditCostumer = () => (
     <Modal
       open={openModalCreateCostumer}
@@ -73,29 +120,38 @@ export default function Dashboard() {
           : 'Cadastro de clientes'
       }
     >
-      <Label>Nome</Label>
-      <Input value={name} onChange={event => setName(event.target.value)} />
-      <Label>Telefone</Label>
-      <Input value={phone} onChange={event => setPhone(event.target.value)} />
-      <Label>CPF</Label>
-      <Input value={CPF} onChange={event => setCPF(event.target.value)} />
-      <Label>RG</Label>
-      <Input value={RG} onChange={event => setRG(event.target.value)} />
-      <Label>Endereço</Label>
-      <Input
-        value={address}
-        onChange={event => setAddress(event.target.value)}
-      />
-      <Label>Nome da mãe</Label>
-      <Input
-        value={nameMother}
-        onChange={event => setNameMother(event.target.value)}
-      />
-      <ButtonPrincipal style={{ marginTop: 10 }}>
-        {selectedModalCreateEditCostumer === 'edit'
-          ? 'Salvar edição'
-          : 'Salvar cadastro'}
-      </ButtonPrincipal>
+      <form>
+        <Label>Nome</Label>
+        <Input value={name} onChange={event => setName(event.target.value)} />
+        <Label>Telefone</Label>
+        <Input value={phone} onChange={event => setPhone(event.target.value)} />
+        <Label>CPF</Label>
+        <Input value={CPF} onChange={event => setCPF(event.target.value)} />
+        <Label>RG</Label>
+        <Input value={RG} onChange={event => setRG(event.target.value)} />
+        <Label>Endereço</Label>
+        <Input
+          value={address}
+          onChange={event => setAddress(event.target.value)}
+        />
+        <Label>Nome da mãe</Label>
+        <Input
+          value={nameMother}
+          onChange={event => setNameMother(event.target.value)}
+        />
+        <ButtonPrincipal
+          style={{ marginTop: 10 }}
+          onSubmit={() =>
+            selectedModalCreateEditCostumer === 'edit'
+              ? editCostumer()
+              : createCostumer()
+          }
+        >
+          {selectedModalCreateEditCostumer === 'edit'
+            ? 'Salvar edição'
+            : 'Salvar cadastro'}
+        </ButtonPrincipal>
+      </form>
     </Modal>
   )
 
@@ -115,22 +171,24 @@ export default function Dashboard() {
         </ButtonPrincipal>
 
         <table>
-          <tr>
-            <th></th>
-            <th>Nome</th>
-            <th>Telefone</th>
-            <th>CPF</th>
-          </tr>
-          {costumers.map(c => (
+          <tbody>
             <tr>
-              <td>
-                <Dropdown optionsItems={optionDropDown} />
-              </td>
-              <td>{c.name}</td>
-              <td>{c.phone}</td>
-              <td>{c.cpf}</td>
+              <th></th>
+              <th>Nome</th>
+              <th>Telefone</th>
+              <th>CPF</th>
             </tr>
-          ))}
+            {costumers.map(c => (
+              <tr key={c.id}>
+                <td>
+                  <Dropdown optionsItems={optionDropDown} />
+                </td>
+                <td>{c.name}</td>
+                <td>{c.phone}</td>
+                <td>{c.cpf}</td>
+              </tr>
+            ))}
+          </tbody>
         </table>
       </Container>
     </>
