@@ -21,7 +21,7 @@ export default function Login() {
 
       history.push('/costumers')
     } catch (error) {
-      toast.error('Email ou senha errada')
+      toast.error(error?.response?.data?.message)
     }
   }
 

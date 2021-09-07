@@ -1,5 +1,12 @@
 import React, { useEffect, useState } from 'react'
-import { FaEye, FaEdit, FaTrash, FaPlus, FaTimes } from 'react-icons/fa'
+import {
+  FaEye,
+  FaEdit,
+  FaTrash,
+  FaPlus,
+  FaTimes,
+  FaInfoCircle
+} from 'react-icons/fa'
 import { toast } from 'react-toastify'
 
 import Modal from '../../components/Modal'
@@ -18,6 +25,7 @@ export default function Dashboard() {
   const [selectedModalCreateEditCostumer, setSelectedModalCreateEditCostumer] =
     useState('create')
   const [name, setName] = useState('')
+  const [email, setEmail] = useState('')
   const [phone, setPhone] = useState('')
   const [RG, setRG] = useState('')
   const [CPF, setCPF] = useState('')
@@ -53,6 +61,7 @@ export default function Dashboard() {
     setOpenModalDeleteCostumer(false)
 
     setName('')
+    setEmail('')
     setPhone('')
     setCPF('')
     setRG('')
@@ -78,7 +87,7 @@ export default function Dashboard() {
 
       setCostumerEdit(response.data)
       setName(response.data.name)
-      setPhone(response.data.phone)
+      setPhone(response.data.cellphone)
       setCPF(response.data.cpf)
       setRG(response.data.rg)
       setAddress(response.data.address)
@@ -104,22 +113,20 @@ export default function Dashboard() {
     try {
       const response = await api.post('customers', {
         name,
-        phone,
+        email,
+        cellphone: phone,
         rg: RG,
         cpf: CPF,
         address,
         name_mother: nameMother
       })
 
-      // quando a api tiver pronta vai mostrar a mensagem
-      // de resposta e a verificação se algum campo
-      // ficou vazia será feita pela api e codigo de erro
       toast.success('Cadastrado com sucesso!')
 
       closeModalModalCreateEditCostumer()
       getData()
     } catch (error) {
-      console.log(error)
+      toast.error(error?.response?.data?.message)
     }
   }
 
@@ -127,22 +134,20 @@ export default function Dashboard() {
     try {
       const response = await api.put(`customers/${costumerEdit?.id}`, {
         name,
-        phone,
+        cellphone: phone,
         rg: RG,
         cpf: CPF,
         address,
         name_mother: nameMother
       })
 
-      // quando a api tiver pronta vai mostrar a mensagem
-      // de resposta e a verificação se algum campo
-      // ficou vazia será feita pela api e codigo de erro
       toast.success('Cliente salvo com sucesso!')
 
       closeModalModalCreateEditCostumer()
       getData()
     } catch (error) {
       console.log(error)
+      toast.error(error?.response?.data?.message)
     }
   }
 
@@ -171,6 +176,12 @@ export default function Dashboard() {
     >
       <Label>Nome</Label>
       <Input value={name} onChange={event => setName(event.target.value)} />
+      <Label>Email</Label>
+      <Input
+        value={email}
+        onChange={event => setEmail(event.target.value)}
+        disabled={selectedModalCreateEditCostumer === 'edit'}
+      />
       <Label>Telefone</Label>
       <Input value={phone} onChange={event => setPhone(event.target.value)} />
       <Label>CPF</Label>
@@ -239,7 +250,7 @@ export default function Dashboard() {
       <Label>Nome</Label>
       <p>{costumerEdit?.name}</p>
       <Label>Telefone</Label>
-      <p>{costumerEdit?.phone}</p>
+      <p>{costumerEdit?.cellphone}</p>
       <Label>RG</Label>
       <p>{costumerEdit?.rg}</p>
       <Label>CPF</Label>
@@ -292,7 +303,7 @@ export default function Dashboard() {
                     <Dropdown optionsItems={optionDropDown} />
                   </td>
                   <td>{c.name}</td>
-                  <td>{c.phone}</td>
+                  <td>{c.cellphone}</td>
                   <td>{c.cpf}</td>
                 </tr>
               )
