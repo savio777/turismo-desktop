@@ -1,6 +1,6 @@
 import React, { useState } from 'react'
 import { useHistory } from 'react-router-dom'
-import sha256 from 'sha256'
+import { toast } from 'react-toastify'
 
 import api from '../../core/api'
 import { Container, FormBox, Divider } from './styles'
@@ -14,12 +14,14 @@ export default function Login() {
 
   const signIn = async () => {
     try {
-      /*const response = await api.post('users', { usuario: email, senha: sha256(password) })
-      if(response.status === 200)*/
+      const response = await api.post('sessions', {
+        email,
+        password
+      })
 
       history.push('/costumers')
     } catch (error) {
-      console.log(error)
+      toast.error('Email ou senha errada')
     }
   }
 
