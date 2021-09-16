@@ -14,8 +14,11 @@ import Dropdown from '../../components/Dropdown'
 import api from '../../core/api'
 import { Container, Title, ContainerRow } from './styles'
 import { ButtonPrincipal, Input, Label } from '../../styles'
+import Spinner from '../../components/Spinner'
 
 export default function Dashboard() {
+  const [loading, setLoading] = useState(false)
+
   const [costumers, setCostumers] = useState([])
   const [openModalDeleteCostumer, setOpenModalDeleteCostumer] = useState(false)
   const [openModalCreateCostumer, setOpenModalCreateCostumer] = useState(false)
@@ -46,10 +49,16 @@ export default function Dashboard() {
 
   const getData = async () => {
     try {
-      const response = await api.get('customers')
+      setLoading(true)
+
+      const response = await api
+        .get('customers')
+        .finally(() => setLoading(false))
 
       setCostumers(response.data)
-    } catch (error) {}
+    } catch (error) {
+      setLoading(false)
+    }
   }
 
   useEffect(() => {
@@ -72,18 +81,27 @@ export default function Dashboard() {
 
   const openModalDetails = async idCostumer => {
     try {
-      const response = await api.get(`customers/${idCostumer}`)
+      setLoading(true)
+      const response = await api
+        .get(`customers/${idCostumer}`)
+        .finally(() => setLoading(false))
 
       setCostumerEdit(response.data)
       setOpenModalDetailsCostumer(true)
     } catch (error) {
+      setLoading(false)
+
       console.log(error)
     }
   }
 
   const openModalEdit = async idCostumer => {
     try {
-      const response = await api.get(`customers/${idCostumer}`)
+      setLoading(true)
+
+      const response = await api
+        .get(`customers/${idCostumer}`)
+        .finally(() => setLoading(false))
 
       setCostumerEdit(response.data)
       setName(response.data.name)
@@ -95,57 +113,74 @@ export default function Dashboard() {
       setOpenModalCreateCostumer(true)
       setSelectedModalCreateEditCostumer('edit')
     } catch (error) {
+      setLoading(false)
       console.log(error)
     }
   }
 
   const openModalExclude = async idCostumer => {
     try {
-      const response = await api.get(`customers/${idCostumer}`)
+      setLoading(true)
+
+      const response = await api
+        .get(`customers/${idCostumer}`)
+        .finally(() => setLoading(false))
+
       setCostumerEdit(response.data)
       setOpenModalDeleteCostumer(true)
     } catch (error) {
+      setLoading(false)
       console.log(error)
     }
   }
 
   const createCostumer = async () => {
     try {
-      const response = await api.post('customers', {
-        name,
-        email,
-        cellphone: phone,
-        rg: RG,
-        cpf: CPF,
-        address,
-        name_mother: nameMother
-      })
+      setLoading(true)
+
+      const response = await api
+        .post('customers', {
+          name,
+          email,
+          cellphone: phone,
+          rg: RG,
+          cpf: CPF,
+          address,
+          name_mother: nameMother
+        })
+        .finally(() => setLoading(false))
 
       toast.success('Cadastrado com sucesso!')
 
       closeModalModalCreateEditCostumer()
       getData()
     } catch (error) {
+      setLoading(false)
       toast.error(error?.response?.data?.message)
     }
   }
 
   const editCostumer = async () => {
     try {
-      const response = await api.put(`customers/${costumerEdit?.id}`, {
-        name,
-        cellphone: phone,
-        rg: RG,
-        cpf: CPF,
-        address,
-        name_mother: nameMother
-      })
+      setLoading(true)
+
+      const response = await api
+        .put(`customers/${costumerEdit?.id}`, {
+          name,
+          cellphone: phone,
+          rg: RG,
+          cpf: CPF,
+          address,
+          name_mother: nameMother
+        })
+        .finally(() => setLoading(false))
 
       toast.success('Cliente salvo com sucesso!')
 
       closeModalModalCreateEditCostumer()
       getData()
     } catch (error) {
+      setLoading(false)
       console.log(error)
       toast.error(error?.response?.data?.message)
     }
@@ -153,13 +188,18 @@ export default function Dashboard() {
 
   const deleteCostumer = async () => {
     try {
-      const response = await api.delete(`customers/${costumerEdit?.id}`)
+      setLoading(true)
+
+      const response = await api
+        .delete(`customers/${costumerEdit?.id}`)
+        .finally(() => setLoading(false))
 
       toast.warn('Cliente deletado com sucesso!')
 
       closeModalModalCreateEditCostumer()
       getData()
     } catch (error) {
+      setLoading(false)
       console.log(error)
     }
   }
@@ -264,6 +304,7 @@ export default function Dashboard() {
 
   return (
     <>
+      <Spinner loading={loading} />
       {modalCreateEditCostumer()}
       {modalDeleteCostumer()}
       {modalDetailsCostumer()}
