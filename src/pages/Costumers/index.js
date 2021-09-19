@@ -16,6 +16,7 @@ import { Container, Title, ContainerRow } from './styles'
 import { ButtonPrincipal, Input, Label } from '../../styles'
 import Spinner from '../../components/Spinner'
 import { maskPattern } from '../../core/helper'
+import InputMaskCustomized from '../../components/InputMaskCustomized'
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false)
@@ -224,9 +225,19 @@ export default function Dashboard() {
         disabled={selectedModalCreateEditCostumer === 'edit'}
       />
       <Label>Telefone</Label>
-      <Input value={phone} onChange={event => setPhone(event.target.value)} />
+      <InputMaskCustomized
+        type="cell"
+        value={phone}
+        onChange={event => setPhone(event.target.value)}
+      />
+      {/*<Input value={phone} onChange={event => setPhone(event.target.value)} />*/}
       <Label>CPF</Label>
-      <Input value={CPF} onChange={event => setCPF(event.target.value)} />
+      <InputMaskCustomized
+        type="cpf"
+        value={CPF}
+        onChange={event => setCPF(event.target.value)}
+      />
+      {/*<Input value={CPF} onChange={event => setCPF(event.target.value)} />*/}
       <Label>RG</Label>
       <Input value={RG} onChange={event => setRG(event.target.value)} />
       <Label>Endereço</Label>
@@ -291,11 +302,11 @@ export default function Dashboard() {
       <Label>Nome</Label>
       <p>{costumerEdit?.name}</p>
       <Label>Telefone</Label>
-      <p>{maskPattern(costumerEdit?.cellphone, '(##) ####-####')}</p>
+      <p>{costumerEdit?.cellphone}</p>
       <Label>RG</Label>
       <p>{costumerEdit?.rg}</p>
       <Label>CPF</Label>
-      <p>{maskPattern(costumerEdit?.cpf, '###.###.###-##')}</p>
+      <p>{costumerEdit?.cpf}</p>
       <Label>Endereço</Label>
       <p>{costumerEdit?.address}</p>
       <Label>Nome da mãe</Label>
@@ -345,8 +356,8 @@ export default function Dashboard() {
                     <Dropdown optionsItems={optionDropDown} />
                   </td>
                   <td>{c.name}</td>
-                  <td>{maskPattern(c.cellphone, '(##) ####-####')}</td>
-                  <td>{maskPattern(c.cpf, '###.###.###-##')}</td>
+                  <td>{c.cellphone}</td>
+                  <td>{c.cpf}</td>
                 </tr>
               )
             })}
