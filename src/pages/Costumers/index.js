@@ -15,6 +15,7 @@ import api from '../../core/api'
 import { Container, Title, ContainerRow } from './styles'
 import { ButtonPrincipal, Input, Label } from '../../styles'
 import Spinner from '../../components/Spinner'
+import { maskPattern } from '../../core/helper'
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false)
@@ -290,11 +291,11 @@ export default function Dashboard() {
       <Label>Nome</Label>
       <p>{costumerEdit?.name}</p>
       <Label>Telefone</Label>
-      <p>{costumerEdit?.cellphone}</p>
+      <p>{maskPattern(costumerEdit?.cellphone, '(##) ####-####')}</p>
       <Label>RG</Label>
       <p>{costumerEdit?.rg}</p>
       <Label>CPF</Label>
-      <p>{costumerEdit?.cpf}</p>
+      <p>{maskPattern(costumerEdit?.cpf, '###.###.###-##')}</p>
       <Label>Endereço</Label>
       <p>{costumerEdit?.address}</p>
       <Label>Nome da mãe</Label>
@@ -344,8 +345,8 @@ export default function Dashboard() {
                     <Dropdown optionsItems={optionDropDown} />
                   </td>
                   <td>{c.name}</td>
-                  <td>{c.cellphone}</td>
-                  <td>{c.cpf}</td>
+                  <td>{maskPattern(c.cellphone, '(##) ####-####')}</td>
+                  <td>{maskPattern(c.cpf, '###.###.###-##')}</td>
                 </tr>
               )
             })}
