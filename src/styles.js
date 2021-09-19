@@ -73,4 +73,15 @@ export const ButtonPrincipal = styled.button`
   color: #fff;
 `
 
+export const ButtonBackup = styled.button`
+  background-color: ${colors.primary};
+  border-radius: 10px;
+  color: #fff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 20px;
+  padding: 20px;
+`
+
 export default GlobalStyle

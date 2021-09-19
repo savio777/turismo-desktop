@@ -5,7 +5,7 @@ import {
   FaTrash,
   FaPlus,
   FaTimes,
-  FaInfoCircle
+  FaDownload
 } from 'react-icons/fa'
 import { toast } from 'react-toastify'
 
@@ -13,7 +13,7 @@ import Modal from '../../components/Modal'
 import Dropdown from '../../components/Dropdown'
 import api from '../../core/api'
 import { Container, Title, ContainerRow } from './styles'
-import { ButtonPrincipal, Input, Label } from '../../styles'
+import { ButtonPrincipal, Input, Label, ButtonBackup } from '../../styles'
 import Spinner from '../../components/Spinner'
 import { maskPattern } from '../../core/helper'
 import InputMaskCustomized from '../../components/InputMaskCustomized'
@@ -331,6 +331,10 @@ export default function Dashboard() {
           <FaPlus style={{ marginRight: 5 }} />
           Cadastrar Cliente
         </ButtonPrincipal>
+
+        <ButtonBackup>
+          <FaDownload />
+        </ButtonBackup>
 
         <table>
           <tbody>
