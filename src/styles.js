@@ -80,7 +80,7 @@ export const ButtonBackup = styled.button`
   display: flex;
   align-items: center;
   justify-content: center;
-  min-height: 20px;
+  height: 20px;
   padding: 20px;
 `
 

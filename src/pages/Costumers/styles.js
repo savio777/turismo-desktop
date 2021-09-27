@@ -43,3 +43,14 @@ export const ContainerRow = styled.div`
   flex-direction: row;
   justify-content: space-between;
 `
+
+export const ContainerButtons = styled.div`
+  display: flex;
+  width: 100%;
+  flex-direction: row;
+`
+
+export const ContainerFlex = styled.div`
+  display: flex;
+  flex: 1;
+`

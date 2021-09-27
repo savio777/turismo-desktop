@@ -12,10 +12,15 @@ import { toast } from 'react-toastify'
 import Modal from '../../components/Modal'
 import Dropdown from '../../components/Dropdown'
 import api from '../../core/api'
-import { Container, Title, ContainerRow } from './styles'
+import {
+  Container,
+  Title,
+  ContainerRow,
+  ContainerButtons,
+  ContainerFlex
+} from './styles'
 import { ButtonPrincipal, Input, Label, ButtonBackup } from '../../styles'
 import Spinner from '../../components/Spinner'
-import { maskPattern } from '../../core/helper'
 import InputMaskCustomized from '../../components/InputMaskCustomized'
 
 export default function Dashboard() {
@@ -322,19 +327,30 @@ export default function Dashboard() {
       {modalDetailsCostumer()}
       <Container>
         <Title>Clientes</Title>
-        <ButtonPrincipal
-          onClick={() => {
-            setSelectedModalCreateEditCostumer('create')
-            setOpenModalCreateCostumer(true)
-          }}
-        >
-          <FaPlus style={{ marginRight: 5 }} />
-          Cadastrar Cliente
-        </ButtonPrincipal>
-
-        <ButtonBackup>
-          <FaDownload />
-        </ButtonBackup>
+        <ContainerButtons>
+          <ContainerFlex />
+          <ContainerFlex>
+            <ButtonPrincipal
+              style={{ minWidth: 300 }}
+              onClick={() => {
+                setSelectedModalCreateEditCostumer('create')
+                setOpenModalCreateCostumer(true)
+              }}
+            >
+              <FaPlus style={{ marginRight: 5 }} />
+              Cadastrar Cliente
+            </ButtonPrincipal>
+          </ContainerFlex>
+          <ContainerFlex
+            style={{
+              justifyContent: 'flex-end'
+            }}
+          >
+            <ButtonBackup style={{ alignSelf: 'flex-end' }}>
+              <FaDownload />
+            </ButtonBackup>
+          </ContainerFlex>
+        </ContainerButtons>
 
         <table>
           <tbody>
