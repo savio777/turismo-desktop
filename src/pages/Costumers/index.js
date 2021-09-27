@@ -12,6 +12,10 @@ import { toast } from 'react-toastify'
 import Modal from '../../components/Modal'
 import Dropdown from '../../components/Dropdown'
 import api from '../../core/api'
+import { ButtonPrincipal, Input, Label, ButtonBackup } from '../../styles'
+import Spinner from '../../components/Spinner'
+import InputMaskCustomized from '../../components/InputMaskCustomized'
+
 import {
   Container,
   Title,
@@ -19,9 +23,6 @@ import {
   ContainerButtons,
   ContainerFlex
 } from './styles'
-import { ButtonPrincipal, Input, Label, ButtonBackup } from '../../styles'
-import Spinner from '../../components/Spinner'
-import InputMaskCustomized from '../../components/InputMaskCustomized'
 
 export default function Dashboard() {
   const [loading, setLoading] = useState(false)
@@ -346,9 +347,9 @@ export default function Dashboard() {
               justifyContent: 'flex-end'
             }}
           >
-            <ButtonBackup style={{ alignSelf: 'flex-end' }}>
+            {/*<ButtonBackup>
               <FaDownload />
-            </ButtonBackup>
+            </ButtonBackup>*/}
           </ContainerFlex>
         </ContainerButtons>
 
